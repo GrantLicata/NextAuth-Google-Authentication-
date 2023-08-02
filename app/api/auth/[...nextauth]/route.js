@@ -4,10 +4,17 @@ import GoogleProvider from "next-auth/providers/google";
 const authOptions = {
   providers: [
     GoogleProvider({
-      clientId: "",
-      clientSecret: "",
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async signIn({ user, account }) {
+      console.log("User: ", user);
+      console.log("Account: ", account);
+      return user;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
